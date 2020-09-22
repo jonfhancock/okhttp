@@ -531,7 +531,13 @@ class RealCall(
             canceledException.addSuppressed(t)
             responseCallback.onFailure(this@RealCall, canceledException)
           }
-          throw t
+          Platform.get().log(
+            "Interceptor error for ${toLoggableString()}. Interceptors are only expected to throw subclasses of IOException.",
+            Platform.INFO, t
+          )
+          throw IllegalStateException(
+            "Unexpected error thrown by Interceptor.  Only expected IOException and descendants",t
+          )
         } finally {
           client.dispatcher.finished(this)
         }

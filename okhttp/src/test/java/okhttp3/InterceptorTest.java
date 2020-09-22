@@ -541,7 +541,7 @@ public final class InterceptorTest {
     assertThat(recordedResponse.failure).hasSuppressedException(boom);
     assertThat(call.isCanceled()).isTrue();
 
-    assertThat(executor.takeException()).isEqualTo(boom);
+    assertThat(executor.takeException().getCause()).isEqualTo(boom);
   }
 
   @Test public void applicationInterceptorReturnsNull() throws Exception {
